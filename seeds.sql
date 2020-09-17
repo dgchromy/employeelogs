@@ -50,32 +50,32 @@ VALUES (10, 'office Administrator', 85000, 4);
 
 -----employee's---
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (1, 'Jim', 'Halpert', 1, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (1, 'Ryan', 'Howard', 2, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (1, 'Dwight', 'Shrute', 3, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (3, 'Angela', 'Martin', 4, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (3, 'Oscar', 'Martinez', 5, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (3, 'Kevin', 'Malone', 6, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (2, 'Robert', 'California', 7, 9);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (4, 'Toby', 'Flenderson', 8, 9);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (4, 'Pam', 'Halpert', 10, null);
 
-INSERT INTO employee (id, first_name, last_name role_id, Manager_id)
+INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (1, 'Michael', 'Scott', 9, 9);
