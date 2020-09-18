@@ -101,5 +101,54 @@ inquirer
 //Employee view function//
 
 function viewAllEmp(){
-    let query = 'SELECT * FROM employee '
+    let query = 'SELECT * FROM employee ';
+
+    connection.query(query, function(err, res){
+        if (err) 
+        throw err;
+        console.log('\n');
+
+        console.table(res);
+
+        mainMenu();
+
+    });
+
+}
+
+function viewAllEmpByDept() {
+    let deptArr = [];
+
+    promisemysql.createConnection(connectionProperties)
+    .then((conn) => {
+
+        return conn.query('SELECT name FROM department');
+    }).then(function(value){
+
+        //for loop to place names within deptArray//
+        deptQuery = value;
+        for (i=o; i < value.length; i++) {
+            deptArr.push(value[i].name);
+
+        }
+    }).then(() => {
+        inquirer.prompt({
+            name: 'department',
+            type: 'list',
+            message: 'Which department would you like to search?',
+            choices: deptArr
+        })
+        .then((answer) => {
+            const query = `SELECT e.id AS ID, e.first_name AS 'First Name', e.last_name AS 'Last Name', role.title AS 'Title' department.name AS Department, role.salary AS salary, concat(m.first_name, '' , m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON e.manager_id = m.id INNER JOIN role ON e.role_id = role.id INNER JOIN department ON role.department_id = department id WHERE department.name = '${answer.department}' ORDER BY ID ASC `;
+            connection.query(query, (err, res) => {
+                if(err) return err;
+
+                console.log('\n');
+                console.table(res);
+
+                mainMenu();
+            });
+        });
+    });
+
 }
