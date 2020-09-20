@@ -284,4 +284,58 @@ function viewAllEmpByDept() {
                 });
     });
 }
+function addRole(){
+    
+
+    let departmentArr = [];
+
+    promisemysql.createConnection(connectionProperties)
+    .then((conn) => {
+
+        return conn.query('SELECT id, name FROM department ORDER BY name ASC');
+
+    
+    }).then ((departments) => {
+        for (i=0; i < departments.length; i++){
+            departmentArr.push(departments [i].name);
+        }
+
+        return departments;
+    }).then((departments) => {
+        inquirer.prompt([
+            {
+
+                name: 'roleTitle',
+                type: 'input',
+                message: 'Role title:'
+            },
+            {
+                name:'salary',
+                type: 'number',
+                message: 'Salary: ',
+            },
+            {
+                name: 'dept',
+                type: 'list',
+                message: 'Department: ',
+                choices: departmentArr
+            }]).then ((answer) => {
+                let deptID;
+
+                for (i=0; i < departments.lenght; i++){
+                    if (answet.dept == departments[i].name){
+                        deptID = departments[i].id;
+
+                    }
+                }
+                connection.query(`INSERT INTO role (title, salary, department_id)
+                VALUES ("${answer.roleTitle}", ${answer.salary}, ${deptID})`, (err, res) => {
+                    if(err) return err;
+                    console.log(`\n ROLE ${answer.roleTitle} ADDED...\n`);
+                    mainMenu();
+            });
+         });
+
+    });
+}
 
