@@ -478,3 +478,66 @@ function updateEmpMngr(){
             });
     });
 }
+
+function viewAllEmpByMngr(){
+
+    // set manager array
+    let managerArr = [];
+
+    // Create connection using promise-sql
+    promisemysql.createConnection(connectionProperties)
+    .then((conn) => {
+
+        // Query all employees
+        return conn.query("SELECT DISTINCT m.id, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e Inner JOIN employee m ON e.manager_id = m.id");
+
+    }).then(function(managers){
+
+        // place all employees in array
+        for (i=0; i < managers.length; i++){
+            managerArr.push(managers[i].manager);
+        }
+
+        return managers;
+    }).then((managers) => {
+
+        inquirer.prompt({
+
+            // Prompt user of manager
+            name: "manager",
+            type: "list",
+            message: "Which manager would you like to search?",
+            choices: managerArr
+        })    
+        .then((answer) => {
+
+            let managerID;
+
+            // get ID of manager selected
+            for (i=0; i < managers.length; i++){
+                if (answer.manager == managers[i].manager){
+                    managerID = managers[i].id;
+                }
+            }
+
+            // query all employees by selected manager
+            const query = `SELECT e.id, e.first_name, e.last_name, role.title, department.name AS department, role.salary, concat(m.first_name, ' ' ,  m.last_name) AS manager
+            FROM employee e
+            LEFT JOIN employee m ON e.manager_id = m.id
+            INNER JOIN role ON e.role_id = role.id
+            INNER JOIN department ON role.department_id = department.id
+            WHERE e.manager_id = ${managerID};`;
+    
+            connection.query(query, (err, res) => {
+                if(err) return err;
+                
+                // display results with console.table
+                console.log("\n");
+                console.table(res);
+
+                // back to main menu
+                mainMenu();
+            });
+        });
+    });
+}
