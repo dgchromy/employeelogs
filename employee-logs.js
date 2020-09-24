@@ -481,19 +481,17 @@ function updateEmpMngr(){
 
 function viewAllEmpByMngr(){
 
-    // set manager array
     let managerArr = [];
 
-    // Create connection using promise-sql
+  
     promisemysql.createConnection(connectionProperties)
     .then((conn) => {
 
-        // Query all employees
+      
         return conn.query("SELECT DISTINCT m.id, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e Inner JOIN employee m ON e.manager_id = m.id");
 
     }).then(function(managers){
 
-        // place all employees in array
         for (i=0; i < managers.length; i++){
             managerArr.push(managers[i].manager);
         }
@@ -503,7 +501,7 @@ function viewAllEmpByMngr(){
 
         inquirer.prompt({
 
-            // Prompt user of manager
+            
             name: "manager",
             type: "list",
             message: "Which manager would you like to search?",
@@ -513,14 +511,14 @@ function viewAllEmpByMngr(){
 
             let managerID;
 
-            // get ID of manager selected
+            
             for (i=0; i < managers.length; i++){
                 if (answer.manager == managers[i].manager){
                     managerID = managers[i].id;
                 }
             }
 
-            // query all employees by selected manager
+           
             const query = `SELECT e.id, e.first_name, e.last_name, role.title, department.name AS department, role.salary, concat(m.first_name, ' ' ,  m.last_name) AS manager
             FROM employee e
             LEFT JOIN employee m ON e.manager_id = m.id
@@ -531,13 +529,165 @@ function viewAllEmpByMngr(){
             connection.query(query, (err, res) => {
                 if(err) return err;
                 
-                // display results with console.table
+                
                 console.log("\n");
                 console.table(res);
 
-                // back to main menu
+               
                 mainMenu();
             });
         });
+    });
+}
+
+function deleteEmp(){
+
+    
+    let employeeArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        
+        return  conn.query("SELECT employee.id, concat(employee.first_name, ' ' ,  employee.last_name) AS employee FROM employee ORDER BY Employee ASC");
+    }).then((employees) => {
+
+       
+        for (i=0; i < employees.length; i++){
+            employeeArr.push(employees[i].employee);
+        }
+
+        inquirer.prompt([
+            {
+                
+                name: "employee",
+                type: "list",
+                message: "Who would you like to delete?",
+                choices: employeeArr
+            }, {
+                
+                name: "yesNo",
+                type: "list",
+                message: "Confirm deletion",
+                choices: ["NO", "YES"]
+            }]).then((answer) => {
+
+                if(answer.yesNo == "YES"){
+                    let employeeID;
+
+                   
+                    for (i=0; i < employees.length; i++){
+                        if (answer.employee == employees[i].employee){
+                            employeeID = employees[i].id;
+                        }
+                    }
+                    
+                    
+                    connection.query(`DELETE FROM employee WHERE id=${employeeID};`, (err, res) => {
+                        if(err) return err;
+
+                       
+                        console.log(`\n EMPLOYEE '${answer.employee}' DELETED...\n `);
+                        
+                        
+                        mainMenu();
+                    });
+                } 
+                else {
+                    
+                    
+                    console.log(`\n EMPLOYEE '${answer.employee}' NOT DELETED...\n `);
+
+              
+                    mainMenu();
+                }
+                
+            });
+    });
+}
+
+// Delete Department
+function deleteDept(){
+
+    // department array
+    let deptArr = [];
+
+    // Create connection using promise-sql
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        // query all departments
+        return conn.query("SELECT id, name FROM department");
+    }).then((depts) => {
+
+        // add all departments to array
+        for (i=0; i < depts.length; i++){
+            deptArr.push(depts[i].name);
+        }
+
+        inquirer.prompt([{
+
+            // confirm to continue to select department to delete
+            name: "continueDelete",
+            type: "list",
+            message: "*** WARNING *** Deleting a department will delete all roles and employees associated with the department. Do you want to continue?",
+            choices: ["NO", "YES"]
+        }]).then((answer) => {
+
+            // if not, go back to main menu
+            if (answer.continueDelete === "NO") {
+                mainMenu();
+            }
+
+        }).then(() => {
+
+            inquirer.prompt([{
+
+                // prompt user to select department
+                name: "dept",
+                type: "list",
+                message: "Which department would you like to delete?",
+                choices: deptArr
+            }, {
+
+                // confirm with user to delete
+                name: "confirmDelete",
+                type: "Input",
+                message: "Type the department name EXACTLY to confirm deletion of the department: "
+
+            }]).then((answer) => {
+
+                if(answer.confirmDelete === answer.dept){
+
+                    // if confirmed, get department id
+                    let deptID;
+                    for (i=0; i < depts.length; i++){
+                        if (answer.dept == depts[i].name){
+                            deptID = depts[i].id;
+                        }
+                    }
+                    
+                    // delete department
+                    connection.query(`DELETE FROM department WHERE id=${deptID};`, (err, res) => {
+                        if(err) return err;
+
+                        // confirm department has been deleted
+                        console.log(`\n DEPARTMENT '${answer.dept}' DELETED...\n `);
+
+                        // back to main menu
+                        mainMenu();
+                    });
+                } 
+                else {
+
+                    // do not delete department if not confirmed and go back to main menu
+                    console.log(`\n DEPARTMENT '${answer.dept}' NOT DELETED...\n `);
+
+                    //back to main menu
+                    mainMenu();
+                }
+                
+            });
+        })
     });
 }
