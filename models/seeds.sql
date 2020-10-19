@@ -51,31 +51,31 @@ VALUES (10, 'office Administrator', 85000, 4);
 -----employee's---
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (1, 'Jim', 'Halpert', 1, null);
+VALUES (12, 'Jim', 'Halpert', 1, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (2, 'Ryan', 'Howard', 2, null);
+VALUES (22, 'Ryan', 'Howard', 2, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (3, 'Dwight', 'Shrute', 3, null);
+VALUES (34, 'Dwight', 'Shrute', 3, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (4, 'Angela', 'Martin', 4, null);
+VALUES (44, 'Angela', 'Martin', 4, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (5, 'Oscar', 'Martinez', 5, null);
+VALUES (54, 'Oscar', 'Martinez', 5, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (6, 'Kevin', 'Malone', 6, null);
+VALUES (64, 'Kevin', 'Malone', 6, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (7, 'Robert', 'California', 7, 9);
+VALUES (74, 'Robert', 'California', 7, 74);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (8, 'Toby', 'Flenderson', 8, 9);
+VALUES (84, 'Toby', 'Flenderson', 8, 84);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (9, 'Pam', 'Halpert', 10, null);
+VALUES (94, 'Pam', 'Halpert', 10, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (10, 'Michael', 'Scott', 9, 9);
+VALUES (95, 'Michael', 'Scott', 9, 95);
