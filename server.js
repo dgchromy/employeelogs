@@ -27,7 +27,7 @@ function searchDataBase() {
               choices: ["Department", "Role", "Employee", "View"]
           })
           .then(function(promptOptions){
-              if (promptOptions.create === "Departments") {
+              if (promptOptions.create === "Department") {
                   addDepartment();
               }
               else if(promptOptions.create === "Position") {
@@ -44,5 +44,65 @@ function searchDataBase() {
               }
           })
   }
+//creating function to add Department // 
 
-  
+  function addDepartment() {
+    inquirer
+      .prompt([
+        {
+          name: "department",
+          type: "input",
+          message: "What department do you want to add?",
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "INSERT INTO department SET ?",
+          {
+            name: answer.department
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Your department was added!");
+            searchDataBase();
+          }
+        );
+      });
+  }
+//add role function// 
+  function addRole() {
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "What position title are you adding?",
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "The salary for this position?",
+        },
+        {
+          name: "departmentId",
+          type: "input",
+          message: "What departmentID are we adding?",
+        }
+      ])
+      .then(function(answer) {
+
+        connection.query(
+          "INSERT INTO role SET ?",
+          {
+            title: answer.title,
+            salary: answer.salary,
+            department_id: answer.departmentId
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Role Added!");
+            searchDataBase();
+          }
+        );
+      });
+  }
