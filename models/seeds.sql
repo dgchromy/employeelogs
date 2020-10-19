@@ -30,7 +30,7 @@ INSERT INTO role (id, title, salary, department_id)
 VALUES (4, 'Head of Accounting', 75000, 3);
 
 INSERT INTO role (id, title, salary, department_id)
-VALUES (5, 'Senior Accoutant', 68000, 3);
+VALUES (5, 'Senior Accountant', 68000, 3);
 
 INSERT INTO role (id, title, salary, department_id)
 VALUES (6, 'Junior Accountant', 58000, 3);
@@ -54,28 +54,28 @@ INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (1, 'Jim', 'Halpert', 1, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (1, 'Ryan', 'Howard', 2, null);
+VALUES (2, 'Ryan', 'Howard', 2, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (1, 'Dwight', 'Shrute', 3, null);
+VALUES (3, 'Dwight', 'Shrute', 3, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (3, 'Angela', 'Martin', 4, null);
+VALUES (4, 'Angela', 'Martin', 4, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (3, 'Oscar', 'Martinez', 5, null);
+VALUES (5, 'Oscar', 'Martinez', 5, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (3, 'Kevin', 'Malone', 6, null);
+VALUES (6, 'Kevin', 'Malone', 6, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (2, 'Robert', 'California', 7, 9);
+VALUES (7, 'Robert', 'California', 7, 9);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (4, 'Toby', 'Flenderson', 8, 9);
+VALUES (8, 'Toby', 'Flenderson', 8, 9);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (4, 'Pam', 'Halpert', 10, null);
+VALUES (9, 'Pam', 'Halpert', 10, null);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (1, 'Michael', 'Scott', 9, 9);
+VALUES (10, 'Michael', 'Scott', 9, 9);
