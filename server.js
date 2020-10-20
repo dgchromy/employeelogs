@@ -149,13 +149,13 @@ function searchDataBase() {
       });
   }
 
-  
+
   function viewData() {
     inquirer
       .prompt({
         name: "table",
         type: "list",
-        message: "What would you like to view?",
+        message: "what would you want to look up?",
         choices: ["Department", "Role", "Employee"]
       })
       .then(function(answer) {
@@ -173,3 +173,27 @@ function searchDataBase() {
         }
       });
   }
+
+  function viewDepartment() {
+    connection.query("SELECT * FROM department", function(err,res){
+      if (err) throw err;
+      console.table(res);
+      searchDataBase();
+    })
+  };
+
+  function viewRole() {
+    connection.query("SELECT * FROM role", function(err,res){
+      if (err) throw err;
+      console.table(res);
+      searchDataBase();
+        })
+    };
+
+    function viewEmployee() {
+        connection.query("SELECT * FROM employee", function(err,res){
+          if (err) throw err;
+          console.table(res);
+          searchDataBase();
+        })
+      };
