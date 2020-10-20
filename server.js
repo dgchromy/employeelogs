@@ -23,15 +23,15 @@ function searchDataBase() {
       .prompt({
         name: "create",
         type: "list",
-        message: "Create a [Department], a [Position], an [Employee] or [View] the following:",
+        message: "Create a [Department], a [Role], an [Employee] or [View] the following:",
               choices: ["Department", "Role", "Employee", "View"]
           })
           .then(function(promptOptions){
               if (promptOptions.create === "Department") {
                   addDepartment();
               }
-              else if(promptOptions.create === "Position") {
-                  addPosition();
+              else if(promptOptions.create === "Role") {
+                  addRole();
               }
               else if(promptOptions.create === "Employee") {
                   addEmployee();
@@ -76,12 +76,12 @@ function searchDataBase() {
         {
           name: "title",
           type: "input",
-          message: "What position title are you adding?",
+          message: "What role title are you adding?",
         },
         {
           name: "salary",
           type: "input",
-          message: "The salary for this position?",
+          message: "The salary for this role?",
         },
         {
           name: "departmentId",
@@ -104,5 +104,72 @@ function searchDataBase() {
             searchDataBase();
           }
         );
+      });
+  }
+
+  function addEmployee() {
+    inquirer
+      .prompt([
+        {
+          name: "first",
+          type: "input",
+          message: "First name of the new Employee",
+        },
+        {
+          name: "last",
+          type: "input",
+          message: "last name of new employee?",
+        },
+        {
+          name: "roleId",
+          type: "input",
+          message: "What is role does new employee have?"
+        },
+        {
+          name: "managerId",
+          type: "input",
+          message: "what is the manager id if employee is a manager",
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "INSERT INTO employee SET ?",
+          {
+            first_name: answer.first,
+            last_name: answer.last,
+            role: answer.roleId,
+            manager_id: answer.managerId
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Employee Added!");
+            searchDataBase();
+          }
+        );
+      });
+  }
+
+  
+  function viewData() {
+    inquirer
+      .prompt({
+        name: "table",
+        type: "list",
+        message: "What would you like to view?",
+        choices: ["Department", "Role", "Employee"]
+      })
+      .then(function(answer) {
+        if (answer.table === "Department") {
+          viewDepartment();
+        }
+        else if(answer.table === "Role") {
+          viewRole();
+        } 
+        else if(answer.table === "Employee") {
+          viewEmployee();
+        }
+        else{
+          connection.end();
+        }
       });
   }
